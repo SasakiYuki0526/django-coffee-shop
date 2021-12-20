@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+from .models import Coffee
+
+
 # Create your views here.
-
-
 def index(request):
-    return HttpResponse('<h1>咖啡</h1>')
+    coffees = Coffee.objects.all()
+    return render(request, 'coffees/index.html', {'coffees': coffees})

@@ -2,9 +2,6 @@ from django.db import models
 
 
 # Create your models here.
-from utils.models import TimestampModel
-
-
 class Roast(models.TextChoices):
     # enum = value(存入的值), display
     LIGHT = 'Light', '極淺度烘焙'
@@ -21,12 +18,11 @@ class OriginPlace(models.Model):
     name = models.CharField('名稱', max_length=20, unique=True)
 
     def __str__(self):
-        return self.name  # 顯示的文字
+        return self.name    #顯示的文字
 
-    # 顯示中文
     class Meta:
-        verbose_name = '產地'  # 單數處理
-        verbose_name_plural = '產地'  # 複數處理
+        verbose_name = '產地'     # 單數處理
+        verbose_name_plural = '產地'    #複數處理
 
 
 class MainProcessing(models.Model):
@@ -40,7 +36,7 @@ class MainProcessing(models.Model):
         verbose_name_plural = '主要處理法'
 
 
-class Grinding(TimestampModel):
+class Grinding(models.Model):
     name = models.CharField('名稱', max_length=10, unique=True)
 
     def __str__(self):
@@ -51,11 +47,7 @@ class Grinding(TimestampModel):
         verbose_name_plural = '磨豆方式'
 
 
-# CharField 長字串
-# PositiveIntegerField 只能是正數
-# TextField 可換行字串
-
-class Coffee(TimestampModel):
+class Coffee(models.Model):
     name = models.CharField('名稱', max_length=20, unique=True)
     weight = models.PositiveIntegerField('重量')
     taste = models.TextField('味道')
@@ -75,8 +67,7 @@ class Coffee(TimestampModel):
     )
     grindings = models.ManyToManyField(Grinding, verbose_name='磨豆方式')
 
-    #function
-    def __str__(self): #在class裡要加self
+    def __str__(self):
         return f'{self.name}({self.price})'
 
     class Meta:
