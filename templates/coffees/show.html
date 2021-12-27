@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block main %}
+<a href="{% url 'coffees:edit' coffee.id %}"class="btn btn-info float-right mr-2">編輯</a>
+<a href="{% url 'coffees:delete' coffee.id %}"class="btn btn-info float-right mr-2">刪除</a>
 <h2>#{{ coffee.id }} {{ coffee.name }}</h2>
 <hr>
 <p>名稱: {{ coffee.name }}</p>
@@ -15,5 +17,4 @@
 <p>磨豆方式: {{ coffee.grindings.all | join:', ' }}</p>
 
 <a href="{% url 'coffees:index' %}" class="btn btn-primary"><< 返回</a>
-<a href="{% url 'coffees:edit' coffee.id %}"class="btn btn-info float-right mr-2">編輯</a>
 {% endblock %}
