@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 
 
 def register(request):
-    # if request.user.is_authenticated:
-    #     return redirect('root')
+    if request.user.is_authenticated:
+        return redirect('root')
 
     form = UserCreationForm(request.POST or None)
     if form.is_valid():
