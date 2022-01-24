@@ -20,8 +20,22 @@ from django.shortcuts import redirect
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 from utils.auth_views import register
+from django.urls import path, include, reverse_lazy
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView
 
+password_set_params = {
+    'template_name': 'users/password_set.html',
+    'post_reset_login': True,
+    'success_url': reverse_lazy('login'),
+}
 
+password_reset_params = {
+    'template_name': 'users/password_reset.html',
+    'email_template_name': 'users/password_reset/email.html',
+    'subject_template_name': 'users/password_reset/subject.txt',
+    'success_url': reverse_lazy('login'),
+}
 
 login_params = {
     'template_name': 'users/login.html',
@@ -35,6 +49,16 @@ urlpatterns = [
     path('coffees/', include('coffees.urls')),
     path('admin/', admin.site.urls),
     path('register/', register, name='register'),
+    path(
+            'password-reset/',
+            PasswordResetView.as_view(**password_reset_params),
+            name='password_reset',
+        ),
+    path(
+            'password-set/<uidb64>/<token>/',
+            PasswordResetConfirmView.as_view(**password_set_params),
+            name='password_set',
+        ),
 ]
 
 handler403 = 'utils.error_handlers.permission_denied'
