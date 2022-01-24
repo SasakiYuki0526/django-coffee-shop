@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django.contrib.staticfiles',
     'coffees.apps.CoffeesConfig',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,27 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+STATIC_URL = '/static/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+try:
+    with open(BASE_DIR / 'core/email.txt', 'r') as file:
+        email_data = file.readlines()
+        email_account, email_password = email_data
+
+        EMAIL_HOST_USER = email_account.strip()
+
+        EMAIL_HOST_PASSWORD = email_password.strip()
+except FileNotFoundError:
+    print('core/email.txt is not exists.')
+except ValueError:
+    print('core/email.txt does not have email account or password.')
+except Exception as e:
+    print(type(e))
 
 
 # Static files (CSS, JavaScript, Images)
