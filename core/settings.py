@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -154,25 +152,3 @@ LOGOUT_REDIRECT_URL = '/login/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-EMAIL_HOST = 'smtp.gmail.com'
-
-EMAIL_PORT = 587
-
-EMAIL_USE_TLS = True
-
-
-try:
-    with open(BASE_DIR / 'core/email.txt', 'r') as file:
-        email_data = file.readlines()
-        email_account, email_password = email_data
-
-    EMAIL_HOST_USER = email_account.strip()
-
-    EMAIL_HOST_PASSWORD = email_password.strip()
-except FileNotFoundError:
-    print('core/email.txt does not exist.')
-except ValueError:
-    print('core/email.txt does not have email account or password.')
-except Exception as e:
-    print(e)
